@@ -1,0 +1,6 @@
+.env
+/node_modules
+log.json
+incorrect.json
+debug*.*
+real.txt

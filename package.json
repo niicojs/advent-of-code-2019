@@ -1,0 +1,20 @@
+{
+  "name": "advent-of-code-2024",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "init part1": "node init.js --part 1",
+    "init part2": "node init.js --part 2"
+  },
+  "dependencies": {
+    "clipboardy": "^4.0.0",
+    "consola": "^3.3.1",
+    "dotenv": "^16.4.7",
+    "mri": "^1.2.0",
+    "remeda": "^2.19.0",
+    "tinyqueue": "^3.0.0",
+    "z3-solver": "^4.13.4"
+  }
+}

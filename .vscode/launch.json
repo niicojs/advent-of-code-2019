@@ -1,0 +1,24 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch on input",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${file}",
+      "runtimeArgs": ["--env-file", ".env"],
+      "outputCapture": "std"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch on real",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${file}",
+      "args": ["real"],
+      "runtimeArgs": ["--env-file", ".env"],
+      "outputCapture": "std"
+    }
+  ]
+}
