@@ -1,16 +1,6 @@
 import { consola } from 'consola';
 import clipboard from 'clipboardy';
-import TinyQueue from 'tinyqueue';
-import {
-  getCurrentDay,
-  getDataLines,
-  getDirectNeighbors,
-  getGrid,
-  getRawData,
-  inGridRange,
-  nums,
-  timer,
-} from '../utils.js';
+import { getCurrentDay, getDataLines, timer } from '../utils.js';
 
 consola.wrapAll();
 
