@@ -1,7 +1,6 @@
 import { consola } from 'consola';
 import clipboard from 'clipboardy';
-import { colors } from 'consola/utils';
-import { getCurrentDay, getRawData, memoize, nums, timer } from '../utils.js';
+import { getCurrentDay, getRawData, nums, timer } from '../utils.js';
 
 consola.wrapAll();
 
@@ -83,40 +82,36 @@ function* run(program, inputs) {
   }
 }
 
-const get = memoize((x, y) => run(code.slice(0), [x, y]).next().value);
+// on arrive en D si on saute.
+// donc on saute si B or C est vide, mais que D est le sol
+// on si A est un trou dans tout les cas
+// donc : (((NOT B) OR (NOT C)) AND D) OR A
 
-let size = 99;
+const script = [
+  'NOT B J', // J si B vide
+  'NOT C T', // T si C vide
+  'OR T J', // J si B vide ou C vide
+  'NOT D T', // D vide
+  'NOT T T', // D pas vide
+  'AND T J', //
+  'NOT A T',
+  'OR T J',
+  'WALK',
+];
 
-const check = (x, y) => {
-  if (get(x, y) === 0) return false;
-  if (get(x, y - size) === 0) return false;
-  if (get(x + size, y) === 0) return false;
-  if (get(x + size, y - size) === 0) return false;
-  return true;
-};
-
-let [x, y] = [0, 10];
-while (true) {
-  while (get(x, y) === 0) x++;
-  if (check(x, y)) break;
-  y++;
+let inputs = [];
+for (const line of script) {
+  inputs.push(...line.split('').map((c) => c.charCodeAt(0)), 10);
 }
 
-for (let j = y - 110; j <= y + 10; j++) {
-  let line = j.toString().padStart((y + 10).toString().length, ' ') + ' ';
-  for (let i = x - 50; i <= x + 120; i++) {
-    if (i === x && j === y - size) {
-      line += get(i, j) ? colors.blue('█') : ' ';
-    } else if (i >= x && i <= x + size && j >= y - size && j <= y) {
-      line += get(i, j) ? colors.yellow('█') : ' ';
-    } else {
-      line += get(i, j) ? '█' : ' ';
-    }
-  }
-  consola.log(line);
+let answer = 0;
+let res = '';
+for (const out of run(code.slice(0), inputs)) {
+  answer = out;
+  res += String.fromCharCode(out);
 }
+consola.log(res);
 
-let answer = x * 10_000 + (y - size);
 consola.success('result', answer);
 consola.success('Done in', t.format());
 clipboard.writeSync(answer?.toString());
