@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "clipboardy": "^4.0.0",
-    "consola": "^3.3.1",
+    "consola": "^3.3.3",
     "dotenv": "^16.4.7",
     "mri": "^1.2.0",
     "remeda": "^2.19.0",

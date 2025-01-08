@@ -106,7 +106,8 @@ function sendAndRead(r, input) {
 
     consola.log(v, '<-', [x, y]);
 
-    inputs[v] = [x, y];
+    if (inputs[v] === undefined) inputs[v] = [];
+    inputs[v].push(x, y);
   }
   return null;
 }
@@ -114,21 +115,21 @@ function sendAndRead(r, input) {
 // run
 while (true) {
   for (let x = 0; x < robots.length; x++) {
-    consola.log(x, '->', inputs[x]);
+    if (inputs[x]) consola.log(x, '->', inputs[x]);
     if (inputs[x]) {
-      while (inputs[x]) {
+      while (inputs[x].length > 0) {
         const val = inputs[x].shift();
         sendAndRead(x, val);
       }
+      inputs[x] = undefined;
     } else {
       sendAndRead(x, -1);
     }
-    inputs[x] = undefined;
   }
-  break;
+  if (inputs[255]) break;
 }
 
-let answer = 0;
+let answer = inputs[255][1]
 consola.success('result', answer);
 consola.success('Done in', t.format());
 clipboard.writeSync(answer?.toString());
